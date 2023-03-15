@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Universal Search</title>
+  <script src="jquery-3.6.0.min.js"></script>
+  <style>
+    #messages {
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      height: 70vh;
+      overflow-y: scroll;
+    }
+    input[type=text] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chat with Universal Search</h1>
+  <div id="messages"></div>
+  <input type="text" id="input" placeholder="Just type...">
+  <button id="send">Send</button>
+  <script>
+    $(document).ready(function() {
+      $("#send").click(function() {
+        sendMessage();
+      });
+
+      $("#input").keypress(function(event) {
+        if (event.which == 13) {
+          sendMessage();
+        }
+      });
+
+      function sendMessage() {
+        var message = $("#input").val();
+        $("#input").val("");
+        if (message !== "") {
+          addMessage("webOS user", message);
+          $.ajax({
+            url: "/api",
+            method: "POST",
+            data: { message: message },
+            success: function(response) {
+              var message = response.message;
+              addMessage("Universal Search", message);
+            },
+            error: function(xhr, status, error) {
+              console.log(xhr.responseText);
+            }
+          });
+        }
+      }
+
+      function addMessage(user, message) {
+        var html = "<p><strong>" + user + ":</strong> " + message + "</p>";
+        $("#messages").append(html);
+        $("#messages").scrollTop($("#messages")[0].scrollHeight);
+      }
+    });
+  </script>
+</body>
+</html>
