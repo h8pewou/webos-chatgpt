@@ -3,6 +3,7 @@ import json
 import array
 
 openai.api_key = "YOUR_API_KEY"
+
 chat_log = []
 
 app = Flask(__name__)
@@ -15,9 +16,7 @@ def chat():
     message = request.form["message"]
     global chat_log
 
-    # Parse chat_log as a list of messages if it exists, else start with an empty list
-    print("### Chat log start")
-    print(chat_log)
+    # Overwrite messages with chat_log
     messages = []
     messages = chat_log
 
