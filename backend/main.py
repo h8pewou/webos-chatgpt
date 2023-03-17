@@ -1,33 +1,39 @@
+# Import necessary libraries and modules
+from flask import Flask, jsonify, make_response, request
+from flask_cors import CORS, cross_origin
 import openai
 import json
 import array
 
+# Set the OpenAI API key
 openai.api_key = "YOUR_API_KEY"
 
-chat_log = []
+# Initialize messages as an array to keep track of conversation history
+messages = []
 
+# Create a Flask application instance
 app = Flask(__name__)
+
+# Enable Cross-Origin Resource Sharing (CORS)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+# Define a route to handle incoming chat requests
 @app.route("/chat", methods=["POST"])
 @cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def chat():
+    # Get the user's message from the request form
     message = request.form["message"]
-    global chat_log
-
-    # Overwrite messages with chat_log
-    messages = []
-    messages = chat_log
+    global messages
 
     # Add the user's message to the messages array
     new_message = {"role": "user", "content": message}
     messages.append(new_message)
 
-    # Build the input to the OpenAI API
+     # Convert the messages array to JSON for input to the OpenAI API
     input_text = json.dumps(messages)
 
-    # Get the response from the OpenAI API
+    # Get a response from the OpenAI API using the GPT-3.5-Turbo model
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=json.loads(input_text),
@@ -46,9 +52,13 @@ def chat():
         "messages": messages
     }
 
+    # Create a Flask response with the JSON response data
     resp = make_response(jsonify({'message': response_message}))
+    # Set CORS headers
     resp.headers['Access-Control-Allow-Origin'] = '*'
+    # Return the response to the client
     return resp
-
+    
+# Start the Flask application
 if __name__ == "__main__":
     app.run(debug=False)
