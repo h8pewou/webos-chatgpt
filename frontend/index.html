@@ -4,25 +4,74 @@
   <title>Universal Search</title>
   <script src="jquery-3.6.0.min.js"></script>
   <style>
+    body {
+      background-color: #222;
+      font-family: "PalmOS", sans-serif;
+      color: #eee;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 20px 0 30px;
+      text-align: center;
+    }
+
     #messages {
       margin: 20px;
       padding: 10px;
-      border: 1px solid #ccc;
+      border: 2px solid #ccc;
+      border-radius: 10px;
       height: 70vh;
       overflow-y: scroll;
+      background-color: #333;
     }
+
     input[type=text] {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       box-sizing: border-box;
       border: 2px solid #ccc;
-      border-radius: 4px;
+      border-radius: 5px;
+      font-size: 20px;
+      font-family: "PalmOS", sans-serif;
+      color: #eee;
+      background-color: #333;
+    }
+
+    button {
+      background-color: #007aff;
+      color: #eee;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0063d6;
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    p {
+      margin: 10px 0;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    strong {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>Chat with Universal Search</h1>
+  <h1>Universal Search</h1>
   <div id="messages"></div>
   <input type="text" id="input" placeholder="Just type...">
   <button id="send">Send</button>
