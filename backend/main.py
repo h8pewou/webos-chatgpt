@@ -45,7 +45,7 @@ def chat():
     )
 
     # Extract the response message and add it to the messages array
-    response_message = response.choices[0].message['content'].strip()
+    response_message = response.choices[0].message['content']
     new_response = {"role": "assistant", "content": response_message}
     messages.append(new_response)
 
@@ -53,6 +53,9 @@ def chat():
     response_data = {
         "messages": messages
     }
+
+    # replace newline characters with <br />
+    response_message = response_message.replace('\n', '<br />')
 
     # Create a Flask response with the JSON response data
     resp = make_response(jsonify({'message': response_message}))
