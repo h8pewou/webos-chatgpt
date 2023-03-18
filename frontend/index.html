@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Universal Search</title>
-  <script src="jquery-3.6.0.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       background-color: #222;
-      font-family: "PalmOS", sans-serif;
+      font-family: Arial, sans-serif;
       color: #eee;
     }
 
     h1 {
-      font-size: 32px;
+      font-size: 2em;
       font-weight: bold;
       margin: 20px 0 30px;
       text-align: center;
@@ -22,7 +23,7 @@
       padding: 10px;
       border: 2px solid #ccc;
       border-radius: 10px;
-      height: 70vh;
+      height: 50vh;
       overflow-y: scroll;
       background-color: #333;
     }
@@ -34,8 +35,8 @@
       box-sizing: border-box;
       border: 2px solid #ccc;
       border-radius: 5px;
-      font-size: 20px;
-      font-family: "PalmOS", sans-serif;
+      font-size: 1.2em;
+      font-family: Arial, sans-serif;
       color: #eee;
       background-color: #333;
     }
@@ -46,7 +47,7 @@
       border: none;
       border-radius: 5px;
       padding: 10px 20px;
-      font-size: 20px;
+      font-size: 1.2em;
       font-weight: bold;
       cursor: pointer;
     }
@@ -61,7 +62,7 @@
 
     p {
       margin: 10px 0;
-      font-size: 18px;
+      font-size: 1.1em;
       line-height: 1.4;
     }
 
@@ -70,23 +71,23 @@
     }
   </style>
 </head>
+
 <body>
   <h1>Universal Search</h1>
   <div id="messages"></div>
   <input type="text" id="input" placeholder="Just type...">
   <button id="send">Send</button>
+  <script src="jquery-3.6.0.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $("#send").click(function() {
+    $(document).ready(function () {
+      $("#send").click(function () {
         sendMessage();
       });
-
-      $("#input").keypress(function(event) {
+      $("#input").keypress(function (event) {
         if (event.which == 13) {
           sendMessage();
         }
       });
-
       function sendMessage() {
         var message = $("#input").val();
         $("#input").val("");
@@ -96,11 +97,11 @@
             url: "/api",
             method: "POST",
             data: { message: message },
-            success: function(response) {
+            success: function (response) {
               var message = response.message;
               addMessage("Universal Search", message);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
               console.log(xhr.responseText);
             }
           });
@@ -115,4 +116,5 @@
     });
   </script>
 </body>
+
 </html>
