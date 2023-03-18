@@ -8,8 +8,10 @@ import array
 # Set the OpenAI API key
 openai.api_key = "YOUR_API_KEY"
 
-# Initialize messages as an array to keep track of conversation history
-messages = []
+# Initialize messages as an array with a system prompt. This array will be used to keep track of conversation history.
+messages = [
+       {"role": "system", "content": "You are a webOS chatbot, your name is Universal Search. Answer as concisely as possible and make sure that your responses do not require any formatting."}
+    ]
 
 # Create a Flask application instance
 app = Flask(__name__)
@@ -30,7 +32,7 @@ def chat():
     new_message = {"role": "user", "content": message}
     messages.append(new_message)
 
-     # Convert the messages array to JSON for input to the OpenAI API
+    # Convert the messages array to JSON for input to the OpenAI API
     input_text = json.dumps(messages)
 
     # Get a response from the OpenAI API using the GPT-3.5-Turbo model
@@ -58,7 +60,7 @@ def chat():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     # Return the response to the client
     return resp
-    
+
 # Start the Flask application
 if __name__ == "__main__":
     app.run(debug=False)
